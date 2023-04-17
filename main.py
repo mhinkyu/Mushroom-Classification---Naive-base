@@ -83,4 +83,18 @@ class attribute_class:
                     if value == example[1][attr_count] and example[0] == 'p':
                         attributes_no_list[attr_count][val_count] += 1
                 val_count += 1
-            attr_count += 1               
+            attr_count += 1
+class naive_class:
+    def naive_bayes(self, example, neg, pos):
+        count = 0
+        pos_prob = 1.0
+        neg_prob = 1.0
+        for attr in example:
+            pos_prob *= attributes_yes_list[count][g_attributes_dictionary[g_attributes[count]].index(attr)]
+            neg_prob *= attributes_no_list[count][g_attributes_dictionary[g_attributes[count]].index(attr)]
+            count += 1
+        if neg_prob > pos_prob:
+            return 'p'
+        else:
+            return 'e'
+if __name__ == '__main__':
