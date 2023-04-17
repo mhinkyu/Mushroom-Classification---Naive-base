@@ -98,3 +98,36 @@ class naive_class:
         else:
             return 'e'
 if __name__ == '__main__':
+    preperation = data_class().prepare_datasets()
+    # prepare_datasets()
+    attributes = attribute_class.parse_attributes(test_data)
+    # parse_attributes()
+    attribute_lists = attribute_class.prepare_attribute_lists(attributes_no_list)
+    # prepare_attribute_lists()
+    print("done with tables")
+    num_pos = 0
+    num_neg = 0
+    for i in training_data:
+        if i[0] == 'e':
+            num_pos += 1
+            pos_train.append(i[1])
+        else:
+            num_neg += 1
+            neg_train.append(i[1])
+    correct = 0
+    mistake_counter = 0
+    for ex in test_data:
+        actual = ex[0]
+        naive = naive_class().naive_bayes(ex[1], 0, 0)
+        calculated = naive
+        # calculated = naive(ex[1], num_neg, num_pos)
+        print("actual: %s classified: %s " % (actual, calculated))
+        if actual == calculated:
+            correct += 1
+        else:
+            mistake_counter += 1
+    print(f'There are a total of {mistake_counter} wrong predictions,and total of {correct} correct predictions, out of {len(test_data)} predictions, tested.')
+    print("Accuracy percentage is: %f " % (float(correct * 100) / float(len(test_data))))
+
+print("Lines of training data:",len(training_data))
+print("Lines of testing data:",len(test_data))
