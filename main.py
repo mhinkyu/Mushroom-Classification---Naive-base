@@ -44,3 +44,43 @@ class data_class:
                 rand_pos = random.randint(0, min(len(positive_dataset), len(negative_dataset)) - 1)
                 self.test_data.append(positive_dataset.pop(rand_pos))
                 self.test_data.append(negative_dataset.pop(rand_pos))
+class attribute_class:
+    def parse_attributes(self):
+        # ATTRIBUTES = agaricus-lepiota.names.csv'
+        with open("/Users/mhinkyu/MyLab/Code Lab/OOP Database/agaricus-lepiota.names.csv", 'r+') as attributes_file:
+            # print(attributes_file)
+            attributes_lines = attributes_file.readlines()
+            # print(attributes_lines)
+        for line in attributes_lines:
+            #print(attributes_lines)
+            pair = line.strip().split()
+            g_attributes.append(pair[0])
+            g_attributes_dictionary[pair[0]] = pair[1].split(',')
+    def prepare_attribute_lists(self):
+        attr_count = 0
+        for i in range(len(g_attributes)):
+            attributes_yes_list.append([])
+            attributes_no_list.append([])
+        for i in attributes_yes_list:
+            for j in range(12):
+                i.append(0)
+        for i in attributes_no_list:
+            for j in range(12):
+                i.append(0)
+        for attr in g_attributes:
+            val_count = 0
+            for value in g_attributes_dictionary[attr]:
+                for example in training_data:
+                    if value == example[1][attr_count] and example[0] == 'e':
+                        attributes_yes_list[attr_count][val_count] += 1
+                val_count += 1
+            attr_count += 1
+        attr_count = 0
+        for attr in g_attributes:
+            val_count = 0
+            for value in g_attributes_dictionary[attr]:
+                for example in training_data:
+                    if value == example[1][attr_count] and example[0] == 'p':
+                        attributes_no_list[attr_count][val_count] += 1
+                val_count += 1
+            attr_count += 1               
